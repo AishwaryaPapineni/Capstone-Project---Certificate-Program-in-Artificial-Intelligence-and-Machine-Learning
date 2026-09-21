@@ -1,0 +1,239 @@
+Loading raw scraped data from: raw_reference/books_seed.csv
+Raw rows loaded: 78
+
+Parse-failure audit: 0 unparseable price(s), 0 unparseable rating(s)
+Clean rows: 78 (from 78 raw rows)
+Saved cleaned dataset -> books_clean.csv
+
+Loaded 5 categories and 78 books into zepto_books.db
+
+======================================================================
+Q1_select_where_instock_expensive
+-- SELECT / WHERE
+        SELECT title, price_gbp, rating
+        FROM books
+        WHERE in_stock = 1 AND price_gbp > 40
+        ORDER BY price_gbp DESC;
+----------------------------------------------------------------------
+                                                             title  price_gbp  rating
+                                     Boar Island (Anna Pigeon #19)      59.48       3
+                                                           Candide      58.63       2
+                                                       Animal Farm      57.22       3
+                                  A Year in Provence (Provence #1)      56.88       4
+                                               The Past Never Ends      56.50       4
+                                                 Masks and Shadows      56.40       1
+                         City of Glass (The Mortal Instruments #3)      56.02       1
+                                  The Last Painting of Sara de Vos      55.55       2
+                           A Flight of Arrows (The Pathfinders #2)      55.53       4
+                                               Alice in Wonderland      55.53       1
+             Murder at the 42nd Street Library (Raymond Ambler #1)      54.36       4
+                                    The Last Mile (Amos Decker #2)      54.21       2
+                                                Tipping the Velvet      53.74       1
+                                       A Court of Thorns and Roses      52.37       5
+                       The Hidden Oracle (The Trials of Apollo #1)      52.26       4
+                 The Guernsey Literary and Potato Peel Pie Society      49.53       2
+  Full Moon over Noah's Ark: An Odyssey to Mount Ararat and Beyond      49.43       4
+See America: A Celebration of Our National Parks & Treasured Sites      48.87       3
+                                                     Sharp Objects      47.82       4
+                                                   Of Mice and Men      47.11       4
+                                            The Star-Touched Queen      46.02       4
+                   Glory over Everything: Beyond The Kitchen House      45.84       4
+                                                 The Little Prince      45.42       4
+                                               The Bane Chronicles      44.73       3
+                                                A Summer In Europe      44.34       2
+                    The Glittering Court (The Glittering Court #1)      44.28       4
+                   The Murder of Roger Ackroyd (Hercule Poirot #4)      44.10       4
+                            Crown of Midnight (Throne of Glass #2)      43.29       4
+                                         The Story of Hong Gildong      43.19       4
+               Hollow City (Miss Peregrine's Peculiar Children #2)      42.98       4
+
+======================================================================
+Q2_order_by_limit_top10_priciest
+-- ORDER BY + LIMIT
+        SELECT title, price_inr
+        FROM books
+        ORDER BY price_inr DESC
+        LIMIT 10;
+----------------------------------------------------------------------
+                                    title  price_inr
+            Boar Island (Anna Pigeon #19)    6275.14
+                                  Candide    6185.46
+                              Animal Farm    6036.71
+         A Year in Provence (Provence #1)    6000.84
+                      The Past Never Ends    5960.75
+                        Masks and Shadows    5950.20
+City of Glass (The Mortal Instruments #3)    5910.11
+         The Last Painting of Sara de Vos    5860.52
+  A Flight of Arrows (The Pathfinders #2)    5858.42
+                      Alice in Wonderland    5858.42
+
+======================================================================
+Q3_distinct_categories
+-- DISTINCT
+        SELECT DISTINCT category_name
+        FROM categories
+        ORDER BY category_name;
+----------------------------------------------------------------------
+     category_name
+          Classics
+           Fantasy
+Historical Fiction
+           Mystery
+            Travel
+
+======================================================================
+Q4_in_rating_filter
+-- IN
+        SELECT title, rating
+        FROM books
+        WHERE rating IN (4, 5)
+        ORDER BY rating DESC, title;
+----------------------------------------------------------------------
+                                                           title  rating
+                              1,000 Places to See Before You Die       5
+                                     A Court of Thorns and Roses       5
+                                                     Lilac Girls       5
+                                                    Mrs. Houdini       5
+                         A Flight of Arrows (The Pathfinders #2)       4
+                                               A Paris Apartment       4
+                         A Study in Scarlet (Sherlock Holmes #1)       4
+                                A Year in Provence (Provence #1)       4
+                                        And Then There Were None       4
+                          Crown of Midnight (Throne of Glass #2)       4
+                Delivering the Truth (Quaker Midwife Mystery #1)       4
+Full Moon over Noah's Ark: An Odyssey to Mount Ararat and Beyond       4
+                 Glory over Everything: Beyond The Kitchen House       4
+                                      Hide Away (Eve Duncan #20)       4
+             Hollow City (Miss Peregrine's Peculiar Children #2)       4
+                                  Little Women (Little Women #1)       4
+           Murder at the 42nd Street Library (Raymond Ambler #1)       4
+                                                 Of Mice and Men       4
+                Princess Between Worlds (Wide-Awake Princess #5)       4
+                   Saga, Volume 6 (Saga (Collected Editions) #6)       4
+                                                   Sharp Objects       4
+                                  The Complete Stories and Poems       4
+                  The Glittering Court (The Glittering Court #1)       4
+                     The Hidden Oracle (The Trials of Apollo #1)       4
+                                               The Little Prince       4
+                                       The Marriage of Opposites       4
+                 The Murder of Roger Ackroyd (Hercule Poirot #4)       4
+                                           The Passion of Dolssa       4
+                                             The Past Never Ends       4
+                                                    The Red Tent       4
+                                               The Secret Garden       4
+                                          The Star-Touched Queen       4
+                                       The Story of Hong Gildong       4
+                            Throne of Glass (Throne of Glass #1)       4
+                 World Without End (The Pillars of the Earth #2)       4
+
+======================================================================
+Q5_between_price_range
+-- BETWEEN
+        SELECT title, price_gbp
+        FROM books
+        WHERE price_gbp BETWEEN 20 AND 30
+        ORDER BY price_gbp;
+----------------------------------------------------------------------
+                                                                    title  price_gbp
+                                                     Love, Lies and Spies      20.55
+                         Delivering the Truth (Quaker Midwife Mystery #1)      20.89
+                                                   Voyager (Outlander #3)      21.07
+       The Road to Little Dribbling: Adventures of an American in Britain      23.21
+                            Saga, Volume 6 (Saga (Collected Editions) #6)      25.02
+        What Happened on Beale Street (Secrets of the South Mysteries #2)      25.37
+                                       1,000 Places to See Before You Die      26.08
+                                           The Complete Stories and Poems      26.78
+                                         Poisonous (Max Revere Novels #3)      26.80
+                                                                The Widow      27.26
+                                           Little Women (Little Women #1)      28.07
+                                                The Marriage of Opposites      28.08
+                     Avatar: The Last Airbender: Smoke and Shadow, Part 3      28.09
+                                                    The Passion of Dolssa      28.32
+                                                        The Metamorphosis      28.58
+                                         Island of Dragons (Unwanteds #7)      29.65
+Forever and Forever: The Courtship of Henry Longfellow and Fanny Appleton      29.69
+                                               The Picture of Dorian Gray      29.70
+
+======================================================================
+Q6_join_top_rated_per_category
+-- JOIN: 3 highest-rated books per category (ties broken by title, so the
+        -- ranking is deterministic and reproducible with pd.merge + groupby below)
+        WITH ranked AS (
+            SELECT
+                c.category_name AS category_name,
+                b.title AS title,
+                b.rating AS rating,
+                b.price_inr AS price_inr,
+                ROW_NUMBER() OVER (
+                    PARTITION BY b.category_id
+                    ORDER BY b.rating DESC, b.title ASC
+                ) AS rnk
+            FROM books b
+            JOIN categories c ON b.category_id = c.category_id
+        )
+        SELECT category_name, title, rating, price_inr
+        FROM ranked
+        WHERE rnk <= 3
+        ORDER BY category_name, rating DESC, title;
+----------------------------------------------------------------------
+     category_name                                                            title  rating  price_inr
+          Classics                                         And Then There Were None       4    3693.56
+          Classics                                   Little Women (Little Women #1)       4    2961.38
+          Classics                                                  Of Mice and Men       4    4970.10
+           Fantasy                                      A Court of Thorns and Roses       5    5525.04
+           Fantasy                           Crown of Midnight (Throne of Glass #2)       4    4567.10
+           Fantasy              Hollow City (Miss Peregrine's Peculiar Children #2)       4    4534.39
+Historical Fiction                                                      Lilac Girls       5    1823.04
+Historical Fiction                                                     Mrs. Houdini       5    3191.38
+Historical Fiction                          A Flight of Arrows (The Pathfinders #2)       4    5858.42
+           Mystery                          A Study in Scarlet (Sherlock Holmes #1)       4    1765.02
+           Mystery                 Delivering the Truth (Quaker Midwife Mystery #1)       4    2203.90
+           Mystery                                       Hide Away (Eve Duncan #20)       4    1249.12
+            Travel                               1,000 Places to See Before You Die       5    2751.44
+            Travel                                 A Year in Provence (Provence #1)       4    6000.84
+            Travel Full Moon over Noah's Ark: An Odyssey to Mount Ararat and Beyond       4    5214.86
+
+======================================================================
+pd.read_sql vs pd.merge equivalence check (JOIN query)
+======================================================================
+pd.read_sql: books=78 rows, categories=5 rows
+
+-- via pd.read_sql (SQL JOIN + correlated subquery) --
+     category_name                                                            title  rating  price_inr
+          Classics                                         And Then There Were None       4    3693.56
+          Classics                                   Little Women (Little Women #1)       4    2961.38
+          Classics                                                  Of Mice and Men       4    4970.10
+           Fantasy                                      A Court of Thorns and Roses       5    5525.04
+           Fantasy                           Crown of Midnight (Throne of Glass #2)       4    4567.10
+           Fantasy              Hollow City (Miss Peregrine's Peculiar Children #2)       4    4534.39
+Historical Fiction                          A Flight of Arrows (The Pathfinders #2)       4    5858.42
+Historical Fiction                                                      Lilac Girls       5    1823.04
+Historical Fiction                                                     Mrs. Houdini       5    3191.38
+           Mystery                          A Study in Scarlet (Sherlock Holmes #1)       4    1765.02
+           Mystery                 Delivering the Truth (Quaker Midwife Mystery #1)       4    2203.90
+           Mystery                                       Hide Away (Eve Duncan #20)       4    1249.12
+            Travel                               1,000 Places to See Before You Die       5    2751.44
+            Travel                                 A Year in Provence (Provence #1)       4    6000.84
+            Travel Full Moon over Noah's Ark: An Odyssey to Mount Ararat and Beyond       4    5214.86
+
+-- via pd.merge (in-memory, no SQL) --
+     category_name                                                            title  rating  price_inr
+          Classics                                         And Then There Were None       4    3693.56
+          Classics                                   Little Women (Little Women #1)       4    2961.38
+          Classics                                                  Of Mice and Men       4    4970.10
+           Fantasy                                      A Court of Thorns and Roses       5    5525.04
+           Fantasy                           Crown of Midnight (Throne of Glass #2)       4    4567.10
+           Fantasy              Hollow City (Miss Peregrine's Peculiar Children #2)       4    4534.39
+Historical Fiction                          A Flight of Arrows (The Pathfinders #2)       4    5858.42
+Historical Fiction                                                      Lilac Girls       5    1823.04
+Historical Fiction                                                     Mrs. Houdini       5    3191.38
+           Mystery                          A Study in Scarlet (Sherlock Holmes #1)       4    1765.02
+           Mystery                 Delivering the Truth (Quaker Midwife Mystery #1)       4    2203.90
+           Mystery                                       Hide Away (Eve Duncan #20)       4    1249.12
+            Travel                               1,000 Places to See Before You Die       5    2751.44
+            Travel                                 A Year in Provence (Provence #1)       4    6000.84
+            Travel Full Moon over Noah's Ark: An Odyssey to Mount Ararat and Beyond       4    5214.86
+
+Row sets match between pd.read_sql and pd.merge approaches: True
+
+Done. Database file: /home/claude/zepto-capstone/data_pipeline/zepto_books.db

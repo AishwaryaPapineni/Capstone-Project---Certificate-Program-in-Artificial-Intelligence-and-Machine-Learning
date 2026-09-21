@@ -1,0 +1,79 @@
+title,price_gbp,price_inr,rating,in_stock,category
+Sharp Objects,47.82,5045.01,4,True,Mystery
+The Past Never Ends,56.5,5960.75,4,True,Mystery
+A Murder in Time,16.64,1755.52,2,True,Mystery
+The Murder of Roger Ackroyd (Hercule Poirot #4),44.1,4652.55,4,True,Mystery
+The Last Mile (Amos Decker #2),54.21,5719.16,2,True,Mystery
+That Darkness (Gardiner and Renner #1),13.92,1468.56,2,True,Mystery
+Tastes Like Fear (DI Marnie Rome #3),10.69,1127.79,1,True,Mystery
+A Study in Scarlet (Sherlock Holmes #1),16.73,1765.02,4,True,Mystery
+Poisonous (Max Revere Novels #3),26.8,2827.4,3,True,Mystery
+Murder at the 42nd Street Library (Raymond Ambler #1),54.36,5734.98,4,True,Mystery
+Most Wanted,35.28,3722.04,3,True,Mystery
+Hide Away (Eve Duncan #20),11.84,1249.12,4,True,Mystery
+Boar Island (Anna Pigeon #19),59.48,6275.14,3,True,Mystery
+The Widow,27.26,2875.93,2,True,Mystery
+Playing with Fire,13.71,1446.41,3,True,Mystery
+What Happened on Beale Street (Secrets of the South Mysteries #2),25.37,2676.54,3,True,Mystery
+Delivering the Truth (Quaker Midwife Mystery #1),20.89,2203.9,4,True,Mystery
+Full Moon over Noah's Ark: An Odyssey to Mount Ararat and Beyond,49.43,5214.86,4,True,Travel
+See America: A Celebration of Our National Parks & Treasured Sites,48.87,5155.78,3,True,Travel
+Vagabonding: An Uncommon Guide to the Art of Long-Term World Travel,36.94,3897.17,2,True,Travel
+Under the Tuscan Sun,37.33,3938.31,3,True,Travel
+A Summer In Europe,44.34,4677.87,2,True,Travel
+The Great Railway Bazaar,30.54,3221.97,1,True,Travel
+A Year in Provence (Provence #1),56.88,6000.84,4,True,Travel
+The Road to Little Dribbling: Adventures of an American in Britain,23.21,2448.66,1,True,Travel
+Neither Here nor There: Travels in Europe,38.95,4109.23,3,True,Travel
+"1,000 Places to See Before You Die",26.08,2751.44,5,True,Travel
+Tipping the Velvet,53.74,5669.57,1,True,Historical Fiction
+Forever and Forever: The Courtship of Henry Longfellow and Fanny Appleton,29.69,3132.3,3,True,Historical Fiction
+A Flight of Arrows (The Pathfinders #2),55.53,5858.42,4,True,Historical Fiction
+Mrs. Houdini,30.25,3191.38,5,True,Historical Fiction
+The Marriage of Opposites,28.08,2962.44,4,True,Historical Fiction
+Glory over Everything: Beyond The Kitchen House,45.84,4836.12,4,True,Historical Fiction
+"Love, Lies and Spies",20.55,2168.02,2,True,Historical Fiction
+A Paris Apartment,39.01,4115.55,4,True,Historical Fiction
+Lilac Girls,17.28,1823.04,5,True,Historical Fiction
+The Constant Princess (The Tudor Court #1),16.62,1753.41,3,True,Historical Fiction
+The Invention of Wings,37.34,3939.37,1,True,Historical Fiction
+World Without End (The Pillars of the Earth #2),32.97,3478.34,4,True,Historical Fiction
+The Passion of Dolssa,28.32,2987.76,4,True,Historical Fiction
+Voyager (Outlander #3),21.07,2222.89,2,True,Historical Fiction
+The Red Tent,35.66,3762.13,4,True,Historical Fiction
+The Last Painting of Sara de Vos,55.55,5860.52,2,True,Historical Fiction
+The Guernsey Literary and Potato Peel Pie Society,49.53,5225.42,2,True,Historical Fiction
+The Secret Garden,15.08,1590.94,4,True,Classics
+The Metamorphosis,28.58,3015.19,2,True,Classics
+Little Women (Little Women #1),28.07,2961.38,4,True,Classics
+Gone with the Wind,32.49,3427.7,1,True,Classics
+Candide,58.63,6185.46,2,True,Classics
+Animal Farm,57.22,6036.71,3,True,Classics
+Wuthering Heights,17.73,1870.52,3,True,Classics
+The Picture of Dorian Gray,29.7,3133.35,2,True,Classics
+The Complete Stories and Poems,26.78,2825.29,4,True,Classics
+Beowulf,38.35,4045.92,2,True,Classics
+And Then There Were None,35.01,3693.56,4,True,Classics
+The Story of Hong Gildong,43.19,4556.54,4,True,Classics
+The Little Prince,45.42,4791.81,4,True,Classics
+Sense and Sensibility,37.46,3952.03,3,True,Classics
+Of Mice and Men,47.11,4970.1,4,True,Classics
+Emma,32.93,3474.12,2,True,Classics
+Alice in Wonderland,55.53,5858.42,1,True,Classics
+Unicorn Tracks,18.78,1981.29,3,True,Fantasy
+"Saga, Volume 6 (Saga (Collected Editions) #6)",25.02,2639.61,4,True,Fantasy
+Princess Between Worlds (Wide-Awake Princess #5),13.34,1407.37,4,True,Fantasy
+Masks and Shadows,56.4,5950.2,1,True,Fantasy
+Crown of Midnight (Throne of Glass #2),43.29,4567.1,4,True,Fantasy
+"Avatar: The Last Airbender: Smoke and Shadow, Part 3",28.09,2963.5,2,True,Fantasy
+A Court of Thorns and Roses,52.37,5525.04,5,True,Fantasy
+Throne of Glass (Throne of Glass #1),35.07,3699.88,4,True,Fantasy
+The Glittering Court (The Glittering Court #1),44.28,4671.54,4,True,Fantasy
+Hollow City (Miss Peregrine's Peculiar Children #2),42.98,4534.39,4,True,Fantasy
+The Star-Touched Queen,46.02,4855.11,4,True,Fantasy
+The Hidden Oracle (The Trials of Apollo #1),52.26,5513.43,4,True,Fantasy
+The Bane Chronicles,44.73,4719.01,3,True,Fantasy
+Island of Dragons (Unwanteds #7),29.65,3128.08,1,True,Fantasy
+Demigods & Magicians,37.51,3957.3,2,True,Fantasy
+City of Glass (The Mortal Instruments #3),56.02,5910.11,1,True,Fantasy
+Searching for Meaning in Gailana,38.73,4086.02,2,True,Fantasy
