@@ -12,7 +12,8 @@ produces the full univariate / bivariate / multivariate "data story" plus an
 exploratory standardization sanity check.
 
 All charts are saved as .png files into charts/. All printed output is also
-captured to eda_output.txt (see run_all.sh) for the required textual record.
+captured to eda_output.txt (redirect stdout, e.g. `python 01_eda.py > eda_output.txt`)
+for the required textual record.
 """
 import numpy as np
 import pandas as pd

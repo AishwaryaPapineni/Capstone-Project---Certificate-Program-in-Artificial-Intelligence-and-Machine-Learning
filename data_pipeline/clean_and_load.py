@@ -17,7 +17,8 @@ What it does, in order:
      with pd.merge on in-memory DataFrames, printing both side by side.
 
 All printed output of this script is also captured to query_output.txt for the
-repository (see run_and_log.sh), satisfying the "executed queries with output"
+repository (redirect stdout to a file, e.g. `python clean_and_load.py > query_output.txt`),
+satisfying the "executed queries with output"
 requirement in text form.
 """
 import sqlite3
