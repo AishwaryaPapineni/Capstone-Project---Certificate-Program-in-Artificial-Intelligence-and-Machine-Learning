@@ -1,0 +1,5 @@
+chroma_db/
+.model_cache/
+*.log
+*.json
+__pycache__/

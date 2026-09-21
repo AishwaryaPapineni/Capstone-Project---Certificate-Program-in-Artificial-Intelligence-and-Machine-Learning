@@ -1,0 +1,10 @@
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.6
+langgraph>=0.2
+chromadb>=0.5
+sentence-transformers>=3.0
+onnxruntime>=1.17
+tokenizers>=0.19
+requests>=2.31
+groq>=0.9
