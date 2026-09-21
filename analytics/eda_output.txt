@@ -1,0 +1,203 @@
+
+==============================================================================
+LOAD
+==============================================================================
+Loaded 891 rows x 15 columns from seaborn (network/cache, one time only).
+Saved raw fallback -> titanic.csv (this is what 02_modeling.py reads back, no second network load).
+
+==============================================================================
+PROFILING: df.info()
+==============================================================================
+<class 'pandas.DataFrame'>
+RangeIndex: 891 entries, 0 to 890
+Data columns (total 15 columns):
+ #   Column       Non-Null Count  Dtype   
+---  ------       --------------  -----   
+ 0   survived     891 non-null    int64   
+ 1   pclass       891 non-null    int64   
+ 2   sex          891 non-null    str     
+ 3   age          714 non-null    float64 
+ 4   sibsp        891 non-null    int64   
+ 5   parch        891 non-null    int64   
+ 6   fare         891 non-null    float64 
+ 7   embarked     889 non-null    str     
+ 8   class        891 non-null    category
+ 9   who          891 non-null    str     
+ 10  adult_male   891 non-null    bool    
+ 11  deck         203 non-null    category
+ 12  embark_town  889 non-null    str     
+ 13  alive        891 non-null    str     
+ 14  alone        891 non-null    bool    
+dtypes: bool(2), category(2), float64(2), int64(4), str(5)
+memory usage: 80.7 KB
+
+==============================================================================
+PROFILING: df.describe()
+==============================================================================
+             count unique          top freq       mean        std   min     25%      50%   75%       max
+survived     891.0    NaN          NaN  NaN   0.383838   0.486592   0.0     0.0      0.0   1.0       1.0
+pclass       891.0    NaN          NaN  NaN   2.308642   0.836071   1.0     2.0      3.0   3.0       3.0
+sex            891      2         male  577        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+age          714.0    NaN          NaN  NaN  29.699118  14.526497  0.42  20.125     28.0  38.0      80.0
+sibsp        891.0    NaN          NaN  NaN   0.523008   1.102743   0.0     0.0      0.0   1.0       8.0
+parch        891.0    NaN          NaN  NaN   0.381594   0.806057   0.0     0.0      0.0   0.0       6.0
+fare         891.0    NaN          NaN  NaN  32.204208  49.693429   0.0  7.9104  14.4542  31.0  512.3292
+embarked       889      3            S  644        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+class          891      3        Third  491        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+who            891      3          man  537        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+adult_male     891      2         True  537        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+deck           203      7            C   59        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+embark_town    889      3  Southampton  644        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+alive          891      2           no  549        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+alone          891      2         True  537        NaN        NaN   NaN     NaN      NaN   NaN       NaN
+
+==============================================================================
+PROFILING: df.shape
+==============================================================================
+(891, 15)
+
+==============================================================================
+PROFILING: % missing per column (columns with any missing values)
+==============================================================================
+deck           77.22
+age            19.87
+embarked        0.22
+embark_town     0.22
+dtype: float64
+
+==============================================================================
+CLEANING
+==============================================================================
+Measured missing-value percentages (affected columns only):
+  deck             77.22%
+  age              19.87%
+  embarked          0.22%
+  embark_town       0.22%
+
+age: 19.87% missing (5-30% bracket) -> imputed with median age = 28.0
+embarked: 0.22% missing (<5% bracket) -> dropped 2 row(s)
+embark_town: 0.22% missing (<5% bracket) -> dropped 0 row(s)
+deck: 77.22% missing (>30%, too unreliable to impute) -> DROPPED the column
+
+Shape after cleaning: (889, 14)
+Remaining missing values:
+ Series([], dtype: int64)
+
+==============================================================================
+UNIVARIATE: age & fare
+==============================================================================
+Saved charts/01_univariate_age_fare.png
+age: IQR outlier bounds = [2.50, 54.50]  ->  65 outlier(s) out of 889 rows
+fare: IQR outlier bounds = [-26.76, 65.66]  ->  114 outlier(s) out of 889 rows
+
+fare: mean=32.10, median=14.45, mode=8.05
+Skewness conclusion: fare is right-skewed (mean > median > mode) — a long tail of a few very expensive fares pulls the mean up.
+
+==============================================================================
+BIVARIATE: survival rate breakdowns (boolean masking)
+==============================================================================
+Survival rate by sex:
+  male     0.189
+  female   0.740
+
+Survival rate by pclass:
+  class 1  0.626
+  class 2  0.473
+  class 3  0.242
+
+Survival rate by sex AND pclass (combined boolean mask):
+  sex=male     pclass=1  survival_rate=0.369
+  sex=male     pclass=2  survival_rate=0.157
+  sex=male     pclass=3  survival_rate=0.135
+  sex=female   pclass=1  survival_rate=0.967
+  sex=female   pclass=2  survival_rate=0.921
+  sex=female   pclass=3  survival_rate=0.500
+
+==============================================================================
+BIVARIATE: correlation matrix (6 numeric columns) + heatmap
+==============================================================================
+          survived  pclass    age  sibsp  parch   fare
+survived     1.000  -0.336 -0.070 -0.034  0.083  0.255
+pclass      -0.336   1.000 -0.337  0.082  0.017 -0.548
+age         -0.070  -0.337  1.000 -0.233 -0.171  0.094
+sibsp       -0.034   0.082 -0.233  1.000  0.415  0.161
+parch        0.083   0.017 -0.171  0.415  1.000  0.218
+fare         0.255  -0.548  0.094  0.161  0.218  1.000
+Saved charts/02_correlation_heatmap.png
+
+Top 2 strongest off-diagonal correlations:
+  pclass <-> fare: r = -0.548
+  sibsp <-> parch: r = 0.415
+
+Interpretation: the two strongest relationships are
+(pclass <-> fare, r=-0.55) and
+(sibsp <-> parch, r=0.41).
+`pclass` and `fare` are strongly negatively correlated because pclass is coded
+1=first, 2=second, 3=third — i.e. a *lower* pclass number is a *more expensive*
+cabin — so a lower pclass number goes with a higher fare, giving a strong
+negative r. `sibsp` and `parch` are positively correlated because both count
+family members traveling together (siblings/spouses vs. parents/children):
+passengers travelling with a larger family tend to show up higher on both
+counts at once, e.g. a parent travelling with several children has high parch
+and is also likely to have a spouse aboard (sibsp>0).
+
+
+==============================================================================
+MULTIVARIATE DATA STORY
+==============================================================================
+
+Chart 1 (survival by class & sex): Women survived at a far higher rate than
+men in every class, and the gap barely narrows even in third class — being
+female was the single strongest advantage in this disaster, well ahead of
+class. First-class women survived at the highest rate of any group; third-
+class men at the lowest, by a wide margin.
+
+
+Chart 2 (age by survival): Median age is similar for survivors and
+non-survivors, but survivors skew slightly younger with a visibly denser
+cluster of children/young passengers — consistent with "women and children
+first" loading procedures rather than age alone driving the outcome.
+
+
+Chart 3 (fare vs age, by survival): Survivors (orange) are noticeably denser
+at higher fares across all ages, while non-survivors (blue) dominate the
+low-fare band. This reinforces that fare (a proxy for class/wealth) tracked
+survival more than age did on its own.
+
+
+Chart 4 (survival by embarkation town): Passengers who boarded at
+Cherbourg survived at the highest rate
+(0.55), those from Southampton
+at the lowest (0.34). This is largely a proxy for
+class mix at each port (Cherbourg embarked a wealthier, more first-class-heavy
+group) rather than embarkation port having any causal effect of its own.
+
+
+Overall story: survival on the Titanic was driven mainly by sex (women far
+more likely to survive than men in every class), then by class/fare (wealth
+bought a better chance via cabin location and earlier access to lifeboats),
+with age playing a smaller, secondary role mostly visible among children.
+
+
+==============================================================================
+EXPLORATORY STANDARDIZATION CHECK (age & fare) — EDA sanity check only, NOT used by the modeling pipeline
+==============================================================================
+Before standardization:
+         age    fare
+mean  29.315  32.097
+std   12.985  49.698
+
+After standardization (z = (x - mean) / std):
+      age_z  fare_z
+mean    0.0     0.0
+std     1.0     1.0
+
+-> both z-columns have mean ~0 and std ~1, confirming the transform is correct.
+Saved charts/07_standardization_before_after.png
+
+==============================================================================
+01_eda.py complete
+==============================================================================
+Cleaned in-memory df shape: (889, 14)
+(titanic.csv on disk is the RAW fallback per the assignment spec; 02_modeling.py
+ reads titanic.csv and does its own train-only preprocessing, as required.)
