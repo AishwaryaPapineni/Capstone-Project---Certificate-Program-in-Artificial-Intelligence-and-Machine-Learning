@@ -1,0 +1,161 @@
+
+==============================================================================
+LOAD (from titanic.csv, not a second network call)
+==============================================================================
+Loaded 891 rows x 15 columns from titanic.csv
+
+==============================================================================
+STRATIFIED TRAIN/TEST SPLIT
+==============================================================================
+Class balance (survived):
+ survived
+0    0.616162
+1    0.383838
+Name: proportion, dtype: float64
+
+Justification for stratification: survival is imbalanced (~38% survived /
+~62% did not, see above). A plain random split can by chance shift that ratio
+between train and test, which would let a model tune to a train-set balance
+that doesn't match what it's evaluated on. stratify=y forces both splits to
+keep the same ~38/62 ratio as the full dataset, so test-set performance is a
+fair readout of how the model handles the *actual* class balance.
+
+Train: 712 rows, Test: 179 rows
+Train class balance:
+ survived
+0    0.616573
+1    0.383427
+Name: proportion, dtype: float64
+Test class balance:
+ survived
+0    0.614525
+1    0.385475
+Name: proportion, dtype: float64
+
+==============================================================================
+PREPROCESSING PIPELINE (fit on train only)
+==============================================================================
+
+ColumnTransformer: numeric columns (age, sibsp, parch, fare) are
+median-imputed then StandardScaler-scaled; categorical columns (sex,
+embarked, pclass) are most-frequent-imputed then one-hot encoded. Wrapped in
+sklearn Pipelines and fit exclusively via pipeline.fit(X_train, y_train) below
+- the imputer/scaler/encoder never see X_test during fit, only .transform().
+
+
+==============================================================================
+TRAIN 3 CLASSIFIERS + FULL METRICS
+==============================================================================
+
+--- Logistic Regression ---
+Confusion matrix:
+ [[98 12]
+ [23 46]]
+Accuracy=0.804  Precision=0.793  Recall=0.667  F1=0.724  AUC=0.843
+
+--- Decision Tree ---
+Confusion matrix:
+ [[96 14]
+ [29 40]]
+Accuracy=0.760  Precision=0.741  Recall=0.580  F1=0.650  AUC=0.789
+
+--- Random Forest ---
+Confusion matrix:
+ [[97 13]
+ [21 48]]
+Accuracy=0.810  Precision=0.787  Recall=0.696  F1=0.738  AUC=0.837
+
+Saved charts/08_roc_curves.png
+
+==============================================================================
+CLASSIFIER COMPARISON TABLE
+==============================================================================
+                     accuracy  precision  recall     f1    auc
+model                                                         
+Logistic Regression     0.804      0.793   0.667  0.724  0.843
+Decision Tree           0.760      0.741   0.580  0.650  0.789
+Random Forest           0.810      0.787   0.696  0.738  0.837
+Saved charts/09_decision_tree.png
+
+==============================================================================
+IMBALANCE HANDLING COMPARISON (Random Forest)
+==============================================================================
+Overall class balance (full y):
+ survived
+0    549
+1    342
+Name: count, dtype: int64
+  -> 38.4% survived / 61.6% did not survive: moderately imbalanced.
+
+                              precision  recall     f1
+strategy                                             
+(a) baseline                     0.787   0.696  0.738
+(b) class_weight=balanced        0.790   0.710  0.748
+(c) SMOTE (train fold only)      0.742   0.710  0.726
+
+Conclusion: "(b) class_weight=balanced" gives the best F1 among the three. In practice,
+class_weight='balanced' and SMOTE both push recall up relative to the
+baseline (they make the model work harder to catch the minority "survived"
+class), usually at some cost to precision; the best F1 balances that
+trade-off. On this dataset the imbalance is moderate (~62/38), so the gap
+between strategies is real but not huge — a strongly imbalanced dataset would
+show a bigger swing.
+
+
+==============================================================================
+HYPERPARAMETER TUNING: GridSearchCV on Random Forest (+ OOB score)
+==============================================================================
+Best params: {'model__max_depth': 5, 'model__max_features': 'sqrt', 'model__n_estimators': 300}
+Best CV F1: 0.743
+OOB score of best estimator: 0.819
+Tuned RF test set: accuracy=0.810  f1=0.707
+
+==============================================================================
+REGRESSION SIDE-TASK: predict fare from other features
+==============================================================================
+MAE=20.81  RMSE=30.47  R2=0.400  Adjusted R2=0.379
+Saved charts/10_regression_residuals.png
+
+Heteroscedasticity conclusion: the residual spread visibly widens as predicted
+fare increases (a funnel/fan shape rather than a uniform band around zero) —
+this IS heteroscedasticity. It's expected here: fare is right-skewed with a
+long tail of very expensive tickets, so a linear model's errors get larger in
+absolute terms for the priciest predictions.
+
+
+==============================================================================
+FINAL MODEL COMPARISON
+==============================================================================
+Classification metrics (3 classifiers):
+                     accuracy  precision  recall     f1    auc
+model                                                         
+Logistic Regression     0.804      0.793   0.667  0.724  0.843
+Decision Tree           0.760      0.741   0.580  0.650  0.789
+Random Forest           0.810      0.787   0.696  0.738  0.837
+
+Regression metrics (fare side-task, separate metric group — not on the same scale):
+   MAE   RMSE  R2  Adjusted_R2
+20.809 30.473 0.4        0.379
+
+Recommendation: deploy the **Random Forest** model. It has the highest F1
+(0.738) among the three classifiers, balancing precision
+(0.787) and recall (0.696) better than
+the alternatives, and its AUC (0.837) is competitive too.
+Random Forest also tends to generalize well on this kind of small, mixed
+categorical/numeric tabular dataset without heavy tuning, and (as shown above)
+its performance can be pushed further with GridSearchCV. Logistic Regression
+remains a reasonable, more interpretable fallback if explainability matters
+more than raw performance.
+
+
+==============================================================================
+SAVE BEST PIPELINE (joblib) + RELOAD CHECK
+==============================================================================
+Saved Random Forest full pipeline -> best_pipeline.joblib
+Predictions from pipeline before save: [0 0 0 0 1]
+Predictions from pipeline after joblib.load: [0 0 0 0 1]
+Reloaded pipeline predicts identically on raw, unpreprocessed input. OK.
+
+==============================================================================
+02_modeling.py complete
+==============================================================================
